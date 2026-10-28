@@ -56,7 +56,7 @@ public class Main {
         System.out.println("  Key:      " + cert.getPublicKey().getAlgorithm() + ", chain of " + chain.size() + " certificate(s)");
 
         // 2. Get a signature over the file's SHA-256 hash
-        byte[] hash =MessageDigest.getInstance("SHA-256").digest(document);
+        byte[] hash = MessageDigest.getInstance("SHA-256").digest(document);
         String sad = client.sad(credentialId, hash);
         Date signingTime = new Date();
         byte[] signature = client.signHash(serviceToken, credentialId, sad, hash,
