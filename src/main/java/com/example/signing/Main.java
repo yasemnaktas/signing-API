@@ -33,6 +33,11 @@ public class Main {
     }
 
     static boolean run(Path file) throws Exception {
+        if (!Files.isRegularFile(file)) {
+            throw new IllegalArgumentException("file not found: " + file.toAbsolutePath());
+        }
+        byte[] document = Files.readAllBytes(file);
+
         StubClient client = new StubClient(
                 env("CSC_BASE_URL", DEFAULT_BASE_URL),
                 env("CSC_CLIENT_ID", null),
@@ -51,8 +56,7 @@ public class Main {
         System.out.println("  Key:      " + cert.getPublicKey().getAlgorithm() + ", chain of " + chain.size() + " certificate(s)");
 
         // 2. Get a signature over the file's SHA-256 hash
-        byte[] document = Files.readAllBytes(file);
-        byte[] hash = MessageDigest.getInstance("SHA-256").digest(document);
+        byte[] hash =MessageDigest.getInstance("SHA-256").digest(document);
         String sad = client.sad(credentialId, hash);
         Date signingTime = new Date();
         byte[] signature = client.signHash(serviceToken, credentialId, sad, hash,
