@@ -100,4 +100,4 @@ Library advice: **EU DSS (Digital Signature Service)** from the European Commiss
 - CSC API v1 specification (credentials/info `certificates: chain`, signHash parameters).
 - Java documentation for `java.security.Signature` and `java.net.http.HttpClient`.
 - I checked each stub call by hand with curl first, and checked the returned signatures independently with `openssl dgst -verify`.
-- AI tools: I wrote an earlier version with ChatGPT's help, and this smaller version with Claude (Claude Code). I reviewed, ran and can explain every line.
+- AI tools: I wrote an earlier version with ChatGPT's help, and this smaller version with Claude (Claude Code). I reviewed, ran and can explain it.
