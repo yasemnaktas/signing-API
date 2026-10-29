@@ -32,7 +32,7 @@ On the service stub the CA is a test CA marked "NOT TRUSTED", so this last part 
 If it helps, I'm happy to do a short call this week to go through it with your team.
 
 Kind regards,
-Yasemin
+Yasemin Aktas
 Integration & Support, Cleverbase
 
 ---
