@@ -36,6 +36,8 @@ public final class SignatureVerifier {
         try {
             Signature verifier = Signature.getInstance(algorithm);
             verifier.initVerify(publicKey);
+            // Whatever goes into update() is hashed by Java with SHA-256 before the check, so this
+            // must be the document. Passing the hash here (Pieter's bug) makes Java hash it twice.
             verifier.update(document);
             return verifier.verify(signature)
                     ? new Result(true, "signature matches this file and the signer's public key (" + algorithm + ")")
@@ -80,6 +82,10 @@ public final class SignatureVerifier {
         };
     }
 
+    /**
+     * "SHA256withRSA" means: first SHA-256 over the input, then the RSA check. The hash step is
+     * built in. "NONEwithRSA" (used in the tests) would skip it and expect the hash as input.
+     */
     private static String javaAlgorithmFor(PublicKey key) {
         return switch (key.getAlgorithm()) {
             case "RSA" -> "SHA256withRSA";

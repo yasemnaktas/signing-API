@@ -65,13 +65,14 @@ public class Main {
         System.out.println();
         System.out.println("Signed " + file + " (" + document.length + " bytes), signature is " + signature.length + " bytes");
 
-        // 3. Verify it
+        // 3. Verify it: the document goes in, not the hash (the verifier hashes it itself)
         SignatureVerifier.Result result = SignatureVerifier.verify(document, signature, cert.getPublicKey());
         SignatureVerifier.Result chainResult = SignatureVerifier.checkChain(chain, signingTime);
 
         // The same check on a file with one byte added, and with Pieter's input (the hash instead of the file)
         byte[] tampered = Arrays.copyOf(document, document.length + 1);
         SignatureVerifier.Result tamperedResult = SignatureVerifier.verify(tampered, signature, cert.getPublicKey());
+        // Pieter's bug: same signature and key, but the hash as input, so it is hashed twice
         SignatureVerifier.Result hashAsInput = SignatureVerifier.verify(hash, signature, cert.getPublicKey());
 
         System.out.println();
